@@ -1,6 +1,6 @@
-# Workspace Skills
+# AI Go Coding Standards
 
-A curated set of 12 flat-file coding-standard skills for Claude Code and compatible AI coding agents.
+**A curated set of 12 flat-file coding-standard skills for Claude Code and compatible AI coding agents.**
 
 Covers a language-agnostic single-responsibility baseline, ports-and-adapters architecture, and a full Go stack:
 - revive linter rules
