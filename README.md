@@ -1,6 +1,17 @@
 # Workspace Skills
 
-Coding-standard skills for Claude Code (and compatible AI coding agents). Each skill is a flat `.md` file with YAML frontmatter; load the ones relevant to the task and the agent will apply the rules automatically.
+A curated set of 12 flat-file coding-standard skills for Claude Code and compatible AI coding agents.
+
+Covers a language-agnostic single-responsibility baseline, ports-and-adapters architecture, and a full Go stack:
+- revive linter rules
+- modern Go (1.22+ / 1.23+ / 1.26+) idioms
+- naming conventions
+- data-structure choices
+- dependency injection
+- security defaults
+- production-ready testing
+
+Drop the `.md` files into your project and the agent applies them automatically.
 
 ## Foundation (language-agnostic)
 
