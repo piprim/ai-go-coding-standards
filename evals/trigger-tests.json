@@ -1,0 +1,247 @@
+{
+  "description": "Trigger-validation prompts for the workspace skills. Each entry is a realistic user message; should_trigger=true means the named skill should activate. Use these to sanity-check the description field of each skill.",
+  "skills": {
+    "focused-functions": [
+      {
+        "id": "ff-1",
+        "should_trigger": true,
+        "query": "I've got an 80-line processOrder() in /workspace/services/orders/handler.go that validates input, fetches the user from postgres, charges the card via stripe, writes the order row, and sends a confirmation email. it works but it's a wall. can you clean it up?"
+      },
+      {
+        "id": "ff-2",
+        "should_trigger": true,
+        "query": "I keep copy-pasting `if err != nil { return fmt.Errorf(\"failed at step X: %w\", err) }` blocks in cmd/cli/setup.go — there are 6 of them now with slightly different step names. what should I do?"
+      },
+      {
+        "id": "ff-3",
+        "should_trigger": true,
+        "query": "review this for me — `func (s *server) Handle(r *http.Request) error { if r.Method == \"POST\" { if err := s.parse(r); err == nil { if err := s.validate(r); err == nil { return s.write(r) } else { return err } } else { return err } } else { return ErrBadMethod } }`"
+      },
+      {
+        "id": "ff-neg-1",
+        "should_trigger": false,
+        "query": "what's the difference between a goroutine and an OS thread?"
+      }
+    ],
+    "golang-linter-rules": [
+      {
+        "id": "lr-1",
+        "should_trigger": true,
+        "query": "add a function LoadConfig(path string) (Config, error) in pkg/config/loader.go that opens the file, reads its contents, and unmarshals JSON into Config"
+      },
+      {
+        "id": "lr-2",
+        "should_trigger": true,
+        "query": "I'm writing pkg/runner and I have `if attempts > 25 { ... }` plus the literal \"worker\" repeated as a log key in 5 different log lines. is that fine?"
+      },
+      {
+        "id": "lr-3",
+        "should_trigger": true,
+        "query": "the lint complains about `errors.New(\"Failed to load config!\")` — what is it asking for?"
+      },
+      {
+        "id": "lr-neg-1",
+        "should_trigger": false,
+        "query": "can you explain what a generic constraint is in Go?"
+      }
+    ],
+    "golang-modern-go": [
+      {
+        "id": "mg-1",
+        "should_trigger": true,
+        "query": "in /workspace/internal/scrape/runner.go I have `for i := 0; i < 50; i++ { go fetch(urls[i]) }` and `var netErr *net.OpError; if errors.As(err, &netErr) { handle(netErr) }`. The project is on Go 1.26 — bring this up to date please."
+      },
+      {
+        "id": "mg-2",
+        "should_trigger": true,
+        "query": "I want to sort a []Job by j.Priority ascending then j.CreatedAt ascending. Currently using sort.Slice with a nested if/else. there's gotta be a cleaner way."
+      },
+      {
+        "id": "mg-3",
+        "should_trigger": true,
+        "query": "modernize this snippet: `func cache(items map[string]interface{}) { for k := range items { delete(items, k) } }`"
+      },
+      {
+        "id": "mg-neg-1",
+        "should_trigger": false,
+        "query": "we're picking between Go and Rust for a new service — what's the trade-off?"
+      }
+    ],
+    "golang-calisthenics": [
+      {
+        "id": "ca-1",
+        "should_trigger": true,
+        "query": "I have `func SendInvite(userID string, email string, orgID string) error` and the call sites in cmd/admin/invite.go keep swapping the argument order. one of them shipped a bug last week. anything I can do at the type level?"
+      },
+      {
+        "id": "ca-2",
+        "should_trigger": true,
+        "query": "/workspace/cmd/orders/handler.go is at 612 lines and growing. should I split it, and how do I decide where the seams are?"
+      },
+      {
+        "id": "ca-3",
+        "should_trigger": true,
+        "query": "review this expression — `city := order.GetCustomer().GetProfile().GetAddress().City`. does that smell right or am I being precious?"
+      },
+      {
+        "id": "ca-neg-1",
+        "should_trigger": false,
+        "query": "I need to add a method to a struct that's defined in another package — what are my options?"
+      }
+    ],
+    "golang-revive-rules": [
+      {
+        "id": "rr-1",
+        "should_trigger": true,
+        "query": "I'm writing `func ProcessOrder(ctx context.Context, db *sql.DB, cache *redis.Client, logger *slog.Logger, mailer *Mailer, billing *Billing, audit *AuditLog) error` — will the linter complain?"
+      },
+      {
+        "id": "rr-2",
+        "should_trigger": true,
+        "query": "can I import crypto/md5 in pkg/cache for hashing cache keys? not for security, just for fast hashing"
+      },
+      {
+        "id": "rr-3",
+        "should_trigger": true,
+        "query": "internal/billing/charges.go is at 580 lines — what does the project's revive config actually allow?"
+      },
+      {
+        "id": "rr-neg-1",
+        "should_trigger": false,
+        "query": "how do I configure golangci-lint v2 in CI for the first time?"
+      }
+    ],
+    "hexagonal-architecture": [
+      {
+        "id": "hx-1",
+        "should_trigger": true,
+        "query": "I'm building a new billing feature: charge a customer's card and record the transaction. The team wants this to be callable over HTTP from the API and from a CLI cron job that retries failed charges nightly. How should I structure the package?"
+      },
+      {
+        "id": "hx-2",
+        "should_trigger": true,
+        "query": "/workspace/services/notifications imports github.com/sendgrid/sendgrid-go directly inside the use-case code, and we want to swap to Postmark next quarter. help me decouple the provider from the business logic without rewriting everything."
+      },
+      {
+        "id": "hx-3",
+        "should_trigger": true,
+        "query": "what does ports-and-adapters mean in practice and when should I reach for it instead of just a normal layered MVC?"
+      },
+      {
+        "id": "hx-neg-1",
+        "should_trigger": false,
+        "query": "what's the difference between gRPC and REST?"
+      }
+    ],
+    "golang-naming": [
+      {
+        "id": "nm-1",
+        "should_trigger": true,
+        "query": "I want to add a new package for cross-cutting helpers — formatting helpers, slice helpers, that kind of thing. internal/utils ok? or internal/helpers?"
+      },
+      {
+        "id": "nm-2",
+        "should_trigger": true,
+        "query": "review these constants — is this the Go convention? `const ( MAX_RETRIES = 5; DEFAULT_TIMEOUT = 30; STATUS_OK = \"ok\" )`"
+      },
+      {
+        "id": "nm-3",
+        "should_trigger": true,
+        "query": "should my method on User be `GetEmail() string` or just `Email() string`? team disagreement happening in the PR"
+      },
+      {
+        "id": "nm-neg-1",
+        "should_trigger": false,
+        "query": "what's the right way to name a feature branch in our repo?"
+      }
+    ],
+    "golang-data-structures": [
+      {
+        "id": "ds-1",
+        "should_trigger": true,
+        "query": "I'm building a slice in a loop in /workspace/internal/etl/transform.go — `out := []Row{}; for _, r := range rows { out = append(out, transform(r)) }`. There are like 40k rows. Profiler says lots of GC pressure here."
+      },
+      {
+        "id": "ds-2",
+        "should_trigger": true,
+        "query": "I need a concurrent-access map for caching user permissions. sync.Map vs RWMutex+map — which one?"
+      },
+      {
+        "id": "ds-3",
+        "should_trigger": true,
+        "query": "I'm building a string by appending in a loop with `s += chunk` — is there a faster way?"
+      },
+      {
+        "id": "ds-neg-1",
+        "should_trigger": false,
+        "query": "explain how Go's garbage collector works"
+      }
+    ],
+    "golang-dependency-injection": [
+      {
+        "id": "di-1",
+        "should_trigger": true,
+        "query": "the wiring in /workspace/cmd/api/main.go is getting out of hand — like 40 lines of NewX(a,b,c) calls. Should I move to google/wire or uber-fx?"
+      },
+      {
+        "id": "di-2",
+        "should_trigger": true,
+        "query": "I want to test ProcessOrder but it calls time.Now() and stripe.Charge() directly inside the function. how do I make this testable?"
+      },
+      {
+        "id": "di-3",
+        "should_trigger": true,
+        "query": "I'm tempted to put the *sql.DB as a package-level global in pkg/storage so I don't have to pass it everywhere. bad idea?"
+      },
+      {
+        "id": "di-neg-1",
+        "should_trigger": false,
+        "query": "how do I add a new dependency to go.mod?"
+      }
+    ],
+    "golang-security": [
+      {
+        "id": "sc-1",
+        "should_trigger": true,
+        "query": "review this query — `db.QueryContext(ctx, \"SELECT * FROM users WHERE name = '\" + name + \"'\")` — name comes from the URL path"
+      },
+      {
+        "id": "sc-2",
+        "should_trigger": true,
+        "query": "I'm generating session tokens with `fmt.Sprintf(\"%x\", rand.Int63())` from math/rand — this is for cookie auth"
+      },
+      {
+        "id": "sc-3",
+        "should_trigger": true,
+        "query": "user uploads a filename, I'm joining it with the upload dir like `filepath.Join(uploadDir, userFilename)` and reading the file. anything to worry about?"
+      },
+      {
+        "id": "sc-neg-1",
+        "should_trigger": false,
+        "query": "how do I rotate the GitHub Actions cache?"
+      }
+    ],
+    "golang-testing": [
+      {
+        "id": "tt-1",
+        "should_trigger": true,
+        "query": "writing tests for normalizeEmail in pkg/users/normalize.go. it has like 12 input/output cases — what's the idiomatic shape?"
+      },
+      {
+        "id": "tt-2",
+        "should_trigger": true,
+        "query": "my test that talks to postgres takes 8 seconds and the rest of the package runs in 200ms. how do I separate these so unit tests stay fast?"
+      },
+      {
+        "id": "tt-3",
+        "should_trigger": true,
+        "query": "I think /workspace/internal/scrape is leaking goroutines — tests pass but `pprof` shows growing goroutine counts in CI. how do I catch this in tests?"
+      },
+      {
+        "id": "tt-neg-1",
+        "should_trigger": false,
+        "query": "what's the difference between go test and go vet?"
+      }
+    ]
+  }
+}
