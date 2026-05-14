@@ -43,6 +43,26 @@
         "id": "lr-neg-1",
         "should_trigger": false,
         "query": "can you explain what a generic constraint is in Go?"
+      },
+      {
+        "id": "rr-1",
+        "should_trigger": true,
+        "query": "I'm writing `func ProcessOrder(ctx context.Context, db *sql.DB, cache *redis.Client, logger *slog.Logger, mailer *Mailer, billing *Billing, audit *AuditLog) error` — will the linter complain?"
+      },
+      {
+        "id": "rr-2",
+        "should_trigger": true,
+        "query": "can I import crypto/md5 in pkg/cache for hashing cache keys? not for security, just for fast hashing"
+      },
+      {
+        "id": "rr-3",
+        "should_trigger": true,
+        "query": "internal/billing/charges.go is at 580 lines — what does the project's revive config actually allow?"
+      },
+      {
+        "id": "rr-neg-1",
+        "should_trigger": false,
+        "query": "how do I configure golangci-lint v2 in CI for the first time?"
       }
     ],
     "golang-modern-go": [
@@ -89,50 +109,7 @@
         "query": "I need to add a method to a struct that's defined in another package — what are my options?"
       }
     ],
-    "golang-revive-rules": [
-      {
-        "id": "rr-1",
-        "should_trigger": true,
-        "query": "I'm writing `func ProcessOrder(ctx context.Context, db *sql.DB, cache *redis.Client, logger *slog.Logger, mailer *Mailer, billing *Billing, audit *AuditLog) error` — will the linter complain?"
-      },
-      {
-        "id": "rr-2",
-        "should_trigger": true,
-        "query": "can I import crypto/md5 in pkg/cache for hashing cache keys? not for security, just for fast hashing"
-      },
-      {
-        "id": "rr-3",
-        "should_trigger": true,
-        "query": "internal/billing/charges.go is at 580 lines — what does the project's revive config actually allow?"
-      },
-      {
-        "id": "rr-neg-1",
-        "should_trigger": false,
-        "query": "how do I configure golangci-lint v2 in CI for the first time?"
-      }
-    ],
-    "hexagonal-architecture": [
-      {
-        "id": "hx-1",
-        "should_trigger": true,
-        "query": "I'm building a new billing feature: charge a customer's card and record the transaction. The team wants this to be callable over HTTP from the API and from a CLI cron job that retries failed charges nightly. How should I structure the package?"
-      },
-      {
-        "id": "hx-2",
-        "should_trigger": true,
-        "query": "/workspace/services/notifications imports github.com/sendgrid/sendgrid-go directly inside the use-case code, and we want to swap to Postmark next quarter. help me decouple the provider from the business logic without rewriting everything."
-      },
-      {
-        "id": "hx-3",
-        "should_trigger": true,
-        "query": "what does ports-and-adapters mean in practice and when should I reach for it instead of just a normal layered MVC?"
-      },
-      {
-        "id": "hx-neg-1",
-        "should_trigger": false,
-        "query": "what's the difference between gRPC and REST?"
-      }
-    ],
+
     "golang-naming": [
       {
         "id": "nm-1",

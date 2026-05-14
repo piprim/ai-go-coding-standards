@@ -9,7 +9,7 @@ metadata:
   version: "3.0.0"
   openclaw:
     emoji: "📚"
-allowed-tools: Read Edit Write Glob Grep Bash(go:*) Bash(golangci-lint:*) Agent
+allowed-tools: Read Edit Write Glob Grep Bash(go:*) Agent
 ---
 
 # Mandatory Go Rules — Index
@@ -28,8 +28,6 @@ This file is an index. The rules themselves live in focused skills so each can b
 | [`golang-data-structures`](./golang-data-structures.md) | Slices (header / capacity growth / preallocation / `slices` pkg), maps (`maps` pkg, `sync.Map`), arrays, `container/list/heap/ring`, `strings.Builder` vs `bytes.Buffer`, generic collections, `unsafe.Pointer`, `weak.Pointer` (1.24+), copy semantics. |
 | [`golang-dependency-injection`](./golang-dependency-injection.md) | Why DI matters; manual constructor injection (the default); functional options; library comparison (`google/wire` compile-time, `uber-go/fx` runtime + lifecycle, `samber/do`, `uber-go/dig`). |
 | [`golang-security`](./golang-security.md) | Injection (SQL, command, XSS, path traversal), cryptography (`crypto/rand`, banned MD5/SHA1, password hashing), filesystem, network/TLS, cookies, secrets, memory & concurrency safety, safe logging, tooling (`gosec`, `govulncheck`). |
-| [`golang-testing`](./golang-testing.md) | Table-driven tests, subtests, parallelism, testify, mocks, unit vs integration vs e2e, benchmarks + benchstat, coverage, fuzzing (1.18+), `testdata/`, golden files, goleak, race detector, CI. |
-| [`golang-revive-rules`](./golang-revive-rules.md) | Comprehensive list of every `revive` rule and parameter enforced in this project — argument-limit 5, function-length 50/150, file-length 500, line-length 124, cyclomatic 15, cognitive 20, max-control-nesting 3, naming, blocklists, and dozens more. |
 
 ## Externally-delegated skills (consult on demand)
 
@@ -51,5 +49,4 @@ If any upstream skill is unavailable in the current environment, ask the user to
 
 1. On any Go task, load all ten **locally-restated** skills before writing or modifying code.
 2. When a task touches a topic in the **externally-delegated** table, invoke that upstream skill in addition.
-3. After edits, run `golangci-lint run ./...` and fix every finding before reporting the task done.
 4. If any rule conflicts with an explicit user instruction in `CLAUDE.md`, `GEMINI.md`, `AGENTS.md`, or in the conversation itself, the user wins — note the deviation and continue.

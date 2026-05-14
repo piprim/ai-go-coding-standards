@@ -1,6 +1,6 @@
 ---
 name: golang-linter-rules
-description: Project-specific Go linter rules that Claude must respect proactively when writing or modifying Go code — covers nlreturn (blank line before return), wrapcheck (always wrap external errors), add-constant (no repeated string literals or magic numbers), error-strings formatting, and the mandatory `golangci-lint run` step. Trigger this skill on every Go edit, even if the user never mentions linting; the project's CI fails on any violation.
+description: Project-specific Go linter rules that Claude must respect proactively when writing or modifying Go code — covers nlreturn (blank line before return), wrapcheck (always wrap external errors), add-constant (no repeated string literals or magic numbers), error-strings formatting. Trigger this skill on every Go edit, even if the user never mentions linting; the project's CI fails on any violation.
 user-invocable: true
 license: MIT
 compatibility: Designed for Claude Code or similar AI coding agents, and for projects using Golang.
@@ -9,12 +9,10 @@ metadata:
   version: "1.0.0"
   openclaw:
     emoji: "✅"
-allowed-tools: Read Edit Write Glob Grep Bash(go:*) Bash(golangci-lint:*) Agent
+allowed-tools: Read Edit Write Glob Grep Bash(go:*) Agent
 ---
 
 # Golang Linter Rules
-
-These rules are enforced by `golangci-lint` in this project. Violations fail CI. Apply them automatically while you write code, not as an afterthought — fixing later costs more than getting it right the first time.
 
 ## 1. nlreturn — blank line before `return`
 
@@ -135,20 +133,39 @@ if err := file.Close(); err != nil {
 }
 ```
 
-## 6. Run the linter — every time
+## 6. Structural Complexity & Sizing Limits
+These thresholds are strictly enforced to keep entities small and readable:
+* Maximum **5** parameters per function.
+* Maximum **3** return values per function.
+* Maximum **50** statements and **150** lines per function.
+* Maximum **500** lines per file (skips comments and blank lines).
+* Maximum **124** characters per line.
+* Maximum cyclomatic complexity of **15** per function.
+* Maximum cognitive complexity of **20** per function.
+* Maximum **3** levels of nesting for control structures (`if`, `for`, `switch`).
+* Maximum **10** public structs per package.
 
-After generating or modifying any Go file, run:
+## 7. Strict Naming Conventions
+* Files must match regex `^[_a-z][_a-z0-9]*\.go$`. Excludes `**/migrations/**`.
+* Package name must match the directory name. Exceptions: `testcases`, `testinfo`, and excluded `migrations`.
+* Do not use user-defined bad names like `foo` or `bar`.
+* Initialisms are strictly checked. `ID` is allowed, but `VM` is denied. Upper-case constants are allowed.
+* Receiver names have a maximum length of **2** characters.
+* Must match `^[a-z][a-z0-9]{0,}$`.
 
-```bash
-golangci-lint run ./...
-```
+## 8. Styling & Code Format Enforcement
+* Maximum **3** instances of the same string literal before requiring a constant. Exceptions: `""`, integers `0,1,2`, and floats `0.0`, `1.0`, `2.0`.
+* Always use `make` for map initialization.
+* Function arguments and return values must use must use the `short` style.
+* Allowed to use `any` style.
+* Allows switches with no default clause.
+* Strongly prefer early returns to avoid nesting.
+* Strict formatting for `core.WriteError.Message`, `fmt.Errorf`, and `panic` (e.g., must not start with a capital letter, must not end in punctuation, must not contain line breaks).
 
-Fix every violation before reporting the task as done. If the linter complains about something the user has explicitly asked you to keep, prefer a narrowly-scoped `//nolint:rulename // reason` comment over disabling the rule globally.
+## 9. Security, Scope & Blocklists
+* Never import `crypto/md5` or `crypto/sha1`.
+* `context.Context` must be the first parameter, though `*testing.T` and `*github.com/user/repo/testing.Harness` are allowed before it.
+* All returned errors must be handled, EXCEPT for calls to `fmt.Printf`, `fmt.Println`, `fmt.Fprint`, `fmt.Fprintln`, and `fmt.Fprintf`.
+* Parameters/Receivers matching `^_` are allowed to be unused.
 
-## How to apply (checklist)
 
-1. Before writing a `return`, ask: is there at least one statement before it in this block? If yes → blank line.
-2. Before returning an `err` from an external call, ask: is there context the caller needs? If yes (almost always) → wrap with `fmt.Errorf("op: %w", err)`.
-3. Before typing a literal, ask: have I typed this string twice already, or is this number > 10? If yes → extract a `const`.
-4. Before writing an error message, ask: does it start lowercase and avoid trailing punctuation?
-5. Before declaring done, run `golangci-lint run ./...` and fix every finding.

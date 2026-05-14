@@ -17,14 +17,14 @@ Drop the `.md` files into your project and the agent applies them automatically.
 
 - **[`focused-functions`](./focused-functions.md)** — Each function does exactly one nameable thing; duplicated logic is extracted on sight; `else` gives way to early returns or polymorphism.
 
-## Architecture
-
-- **[`hexagonal-architecture`](./hexagonal-architecture.md)** — Ports & Adapters: domain-centric design with inbound/outbound port interfaces, adapter implementations at the edges, and a single composition root. Cross-language (TypeScript / Java / Kotlin / Go).
-
 ## Go — linter & rules enforcement
 
-- **[`golang-revive-rules`](./golang-revive-rules.md)** — Comprehensive list of every `revive` rule and parameter the project enforces (argument-limit 5, function-length 50/150, file-length 500, line-length 124, cyclomatic 15, cognitive 20, naming, blocklists).
-- **[`golang-linter-rules`](./golang-linter-rules.md)** — Project-specific `golangci-lint` rules: `nlreturn` (blank line before return), `wrapcheck` (always wrap external errors), `add-constant` (no repeated literals or magic numbers), `error-strings` formatting, mandatory `golangci-lint run` step.
+- **[`golang-linter-rules`](./golang-linter-rules.md)**
+  — Project-specific `golangci-lint` rules: `nlreturn` (blank line before return), `wrapcheck` (always wrap external errors), `add-constant` (no repeated literals or magic numbers), `error-strings` formatting.
+  - Structural Complexity & Sizing Limits
+  - Strict Naming Conventions
+  - Styling & Code Format Enforcement
+  - Security, Scope & Blocklists
 
 ## Go — language usage
 

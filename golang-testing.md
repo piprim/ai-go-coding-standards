@@ -9,7 +9,7 @@ metadata:
   version: "1.0.0"
   openclaw:
     emoji: "🧪"
-allowed-tools: Read Edit Write Glob Grep Bash(go:*) Bash(golangci-lint:*) Agent
+allowed-tools: Read Edit Write Glob Grep Bash(go:*) Agent
 ---
 
 # Golang Testing
